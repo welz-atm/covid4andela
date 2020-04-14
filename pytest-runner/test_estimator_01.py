@@ -5,7 +5,7 @@ from .estimator import currentlyinfected, currently_infected, infectionbyrequest
     severecasesbyrequestedtime, hospitalbedsperrequestedtime, casesforicubyrequestedtime, \
     casesforventilatorsbyrequestedtime,dollarsinflight
 
-
+#APIs
 @pytest.fixture
 def api_client():
     from rest_framework.test import APIClient
