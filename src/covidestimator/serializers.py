@@ -1,7 +1,6 @@
-import os
 from rest_framework import serializers
-from .models import Data,logs
-from .estimator import started_time,end_time,total_time
+from .models import Data
+from silk.models import Request
 
 
 class DataFormSerializer(serializers.ModelSerializer):
@@ -19,3 +18,10 @@ class DataFormSerializer(serializers.ModelSerializer):
         model = Data
         fields = ('name', 'avgAge', 'avgDailyIncome', 'avgDailyIncomePopulation', 'periodType', 'timeToElapse', 'reportedCases',
                   'population', 'totalHospitalBeds',)
+				  
+
+class LogSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Request
+        fields = ('start_time','path','time_taken',)

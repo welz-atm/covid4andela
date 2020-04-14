@@ -8,6 +8,6 @@ urlpatterns = [
     path('check/',views.create_data,name='impact_default'),
     path('json/',views.create_data,name='impact_json'),
     path('xml/',views.create_data_xml,name='impact_xml'),
-#    path('logs/',views.log_request(),name='impact_logs'),
+    path('logs/',views.log_request,name='impact_logs'),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

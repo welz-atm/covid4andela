@@ -1,4 +1,4 @@
-import os
+from silk.models import Request
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view
@@ -117,3 +117,10 @@ def create_data_xml(request):
         return Response(xml)
     else:
         return Response(serializer.errors)
+		
+		
+@api_view(['GET',])
+def log_request(request):
+    log = Request.objects.all()
+    serializer = LogSerializer(log,many=True)
+    return Response(serializer.data)
