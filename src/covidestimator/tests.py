@@ -5,13 +5,14 @@ from .estimator import currentlyinfected, currently_infected, infectionbyrequest
     severecasesbyrequestedtime, hospitalbedsperrequestedtime, casesforicubyrequestedtime, \
     casesforventilatorsbyrequestedtime,dollarsinflight
 
-
+#default client
 @pytest.fixture
 def api_client():
     from rest_framework.test import APIClient
     return APIClient()
 
-
+#ApiViews
+	
 @pytest.mark.django_db
 def test_log_view(api_client):
     url = reverse('impact_logs')
@@ -38,6 +39,9 @@ def test_default_view(api_client):
     url = reverse('impact_default')
     response = api_client.get(url)
     assert response.status_code == 200
+	
+	
+#Impact
 
 
 @pytest.mark.django_db

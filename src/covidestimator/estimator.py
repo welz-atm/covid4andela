@@ -43,18 +43,3 @@ def dollarsinflight(x,y):
     return (x * 0.65) * y * 30
 
 
-def started_time():
-    start_time = time.time()
-    return start_time
-
-
-def end_time():
-    end_time = time.time()
-    return end_time
-
-
-def total_time(x,y):
-    total = x - y
-    return total
-
-
