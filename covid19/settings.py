@@ -28,7 +28,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-
+ALLOWED_HOSTS = ['covid4andela.herokuapp.com']
 
 
 # Application definition
@@ -108,7 +108,6 @@ DATABASES = {
     )
 }
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Password validation
