@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4361eca6-c126-41a5-bb16-63ab331b1b9e" name="Default Changelist" comment="" />
+    <list default="true" id="4361eca6-c126-41a5-bb16-63ab331b1b9e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/covid19/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/covid19/settings.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
