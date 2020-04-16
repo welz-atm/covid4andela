@@ -18,12 +18,13 @@ class SevereImpactAdmin(admin.ModelAdmin):
 class DataAdmin(admin.ModelAdmin):
     list_display = ('name','avgAge','avgDailyIncome','avgDailyIncomePopulation','periodType','timeToElapse',
                     'reportedCases','population','totalHospitalBeds',)
-					
+
+
 class RequestAdmin(admin.ModelAdmin):
     list_display = ('start_time','path','time_taken',)
 
 
 admin.site.register(Data,DataAdmin)
-admin.site.register(Data,DataAdmin)
+admin.site.register(Request,RequestAdmin)
 admin.site.register(Impact,ImpactAdmin)
 admin.site.register(SevereImpact,SevereImpactAdmin)

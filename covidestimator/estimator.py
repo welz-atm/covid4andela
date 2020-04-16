@@ -1,6 +1,3 @@
-from datetime import time
-
-
 def calculate_period(x):
     if x == 'weeks':
         return x * 7

@@ -18,7 +18,7 @@ class DataFormSerializer(serializers.ModelSerializer):
         model = Data
         fields = ('name', 'avgAge', 'avgDailyIncome', 'avgDailyIncomePopulation', 'periodType', 'timeToElapse', 'reportedCases',
                   'population', 'totalHospitalBeds',)
-				  
+
 
 class LogSerializer(serializers.ModelSerializer):
 
