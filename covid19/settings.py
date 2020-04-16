@@ -28,7 +28,10 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ['covid4andela.herokuapp.com']
+AALOWED_HOSTS = ['herokudjangoapp.herokuapp.com']
+
+
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -42,10 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'covidestimator',
     'rest_framework',
-	'silk',
+    'silk',
 ]
 
+#    'whitenoise.middleware.WhiteNoiseMiddleware'
+
 MIDDLEWARE = [
+
+    'silk.middleware.SilkyMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'covid19.urls'
 
@@ -89,34 +97,26 @@ WSGI_APPLICATION = 'covid19.wsgi.application'
 
 #PostSQL
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG',default=False ,cast=bool)
 
- 
-#prod_db  =  dj_database_url.config(conn_max_age=500)
-#DATABASES['default'].update(prod_db)
-
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': '',
-    }
-}
-
-
 #DATABASES = {
-#    'default': dj_database_url.config(
-#        default=config('DATABASE_URL')
-#    )
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': config('DB_NAME'),
+#        'USER': config('DB_USER'),
+#        'PASSWORD': config('DB_PASSWORD'),
+#        'HOST': config('DB_HOST'),
+#        'PORT': '',
+#    }
 #}
 
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 
 

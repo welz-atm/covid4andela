@@ -6,7 +6,7 @@ from rest_framework_xml.renderers import XMLRenderer
 from .serializers import DataFormSerializer,LogSerializer
 from .estimator import currentlyinfected, currently_infected, infectionbyrequestedattime, \
     severecasesbyrequestedtime, hospitalbedsperrequestedtime, casesforicubyrequestedtime, \
-    casesforventilatorsbyrequestedtime,dollarsinflight,started_time,end_time,total_time
+    casesforventilatorsbyrequestedtime,dollarsinflight
 
 
 @api_view(['POST','GET'])
@@ -29,11 +29,21 @@ def create_data(request):
         account_data['totalHospitalBeds'] = account.totalHospitalBeds
 
         impact['currentlyInfected']= currentlyinfected(account.reportedCases)
-        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases))
-        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases)))
-        impact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,severecasesbyrequestedtime(infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases))))
-        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases)))
-        impact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(currentlyinfected(account.reportedCases))
+        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,currentlyinfected
+        (account.reportedCases))
+        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(infectionbyrequestedattime
+                                                                        (account.timeToElapse,currentlyinfected
+                                                                        (account.reportedCases)))
+        impact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,
+                                                                              severecasesbyrequestedtime
+                                                                              (infectionbyrequestedattime
+                                                                               (account.timeToElapse,currentlyinfected
+                                                                               (account.reportedCases))))
+        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(infectionbyrequestedattime
+                                                                          (account.timeToElapse,currentlyinfected
+                                                                          (account.reportedCases)))
+        impact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(currentlyinfected
+                                                                                          (account.reportedCases))
         impact['dollarsInFlight'] = dollarsinflight(currentlyinfected(account.reportedCases),account.avgDailyIncome)
 
         severeimpact['currentlyInfected'] = currently_infected(account.reportedCases)
@@ -84,11 +94,22 @@ def create_data_xml(request):
         account_data['totalHospitalBeds'] = account.totalHospitalBeds
 
         impact['currentlyInfected']= currentlyinfected(account.reportedCases)
-        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases))
-        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases)))
-        impact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,severecasesbyrequestedtime(infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases))))
-        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(infectionbyrequestedattime(account.timeToElapse,currentlyinfected(account.reportedCases)))
-        impact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(currentlyinfected(account.reportedCases))
+        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,currentlyinfected
+        (account.reportedCases))
+        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(infectionbyrequestedattime
+                                                                        (account.timeToElapse,currentlyinfected
+                                                                        (account.reportedCases)))
+        impact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,
+                                                                              severecasesbyrequestedtime
+                                                                              (infectionbyrequestedattime
+                                                                               (account.timeToElapse,
+                                                                                currentlyinfected
+                                                                                (account.reportedCases))))
+        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(infectionbyrequestedattime
+                                                                          (account.timeToElapse,
+                                                                           currentlyinfected(account.reportedCases)))
+        impact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(currentlyinfected
+                                                                                          (account.reportedCases))
         impact['dollarsInFlight'] = dollarsinflight(currentlyinfected(account.reportedCases),account.avgDailyIncome)
 
         severeimpact['currentlyInfected'] = currently_infected(account.reportedCases)
@@ -117,8 +138,8 @@ def create_data_xml(request):
         return Response(xml)
     else:
         return Response(serializer.errors)
-		
-		
+
+
 @api_view(['GET',])
 def log_request(request):
     log = Request.objects.all()
