@@ -50,7 +50,7 @@ def test_default_view(api_client):
 
 @pytest.mark.django_db
 def test_currently_infected():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     currently_infected = currentlyinfected(data.reportedCases)
@@ -59,7 +59,7 @@ def test_currently_infected():
 
 @pytest.mark.django_db
 def test_infection_by_requested_at_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     infection_byrequestedat_time = infectionbyrequestedattime(data.timeToElapse,currentlyinfected(data.reportedCases))
@@ -68,7 +68,7 @@ def test_infection_by_requested_at_time():
 
 @pytest.mark.django_db
 def test_severe_cases_by_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
@@ -79,7 +79,7 @@ def test_severe_cases_by_requested_time():
 
 @pytest.mark.django_db
 def test_hospital_beds_per_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     hospitalbedsperrequested_time = hospitalbedsperrequestedtime(data.totalHospitalBeds,severecasesbyrequestedtime
@@ -89,7 +89,7 @@ def test_hospital_beds_per_requested_time():
 
 @pytest.mark.django_db
 def test_cases_for_icu_by_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     casesforicubyrequested_time = casesforicubyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
@@ -100,7 +100,7 @@ def test_cases_for_icu_by_requested_time():
 
 @pytest.mark.django_db
 def test_cases_for_ventilators_by_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     casesforventilatorsbyrequested_time = casesforventilatorsbyrequestedtime(currentlyinfected(data.reportedCases))
@@ -109,7 +109,7 @@ def test_cases_for_ventilators_by_requested_time():
 
 @pytest.mark.django_db
 def test_dollars_in_flight():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     dollarsin_flight = dollarsinflight(currentlyinfected(data.reportedCases),data.avgDailyIncome)
@@ -120,7 +120,7 @@ def test_dollars_in_flight():
 
 @pytest.mark.django_db
 def test_currently_infected():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     currentlyinfected = currently_infected(data.reportedCases)
@@ -129,7 +129,7 @@ def test_currently_infected():
 
 @pytest.mark.django_db
 def test_infection_by_requested_at_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     infection_byrequestedat_time = infectionbyrequestedattime(data.timeToElapse,currently_infected(data.reportedCases))
@@ -138,7 +138,7 @@ def test_infection_by_requested_at_time():
 
 @pytest.mark.django_db
 def test_severe_cases_by_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
@@ -149,7 +149,7 @@ def test_severe_cases_by_requested_time():
 
 @pytest.mark.django_db
 def test_hospital_beds_per_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     hospitalbedsperrequested_time = hospitalbedsperrequestedtime(data.totalHospitalBeds,severecasesbyrequestedtime(
@@ -161,7 +161,7 @@ def test_hospital_beds_per_requested_time():
 
 @pytest.mark.django_db
 def test_cases_for_icu_by_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     casesforicubyrequested_time = casesforicubyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
@@ -172,7 +172,7 @@ def test_cases_for_icu_by_requested_time():
 
 @pytest.mark.django_db
 def test_cases_for_ventilators_by_requested_time():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     casesforventilatorsbyrequested_time = casesforventilatorsbyrequestedtime(currently_infected(data.reportedCases))
@@ -181,7 +181,7 @@ def test_cases_for_ventilators_by_requested_time():
 
 @pytest.mark.django_db
 def test_dollars_in_flight():
-    data = Data.objects.create_user(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     dollarsin_flight = dollarsinflight(currently_infected(data.reportedCases),data.avgDailyIncome)
