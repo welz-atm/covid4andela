@@ -163,6 +163,7 @@ STATICFILES_DIRS = (
     os.path.join(STATIC_ROOT, 'static'),
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+BACKEND = config('BACKEND')
 
 
 
