@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from silk.models import Request
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
