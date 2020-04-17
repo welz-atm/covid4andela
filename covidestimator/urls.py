@@ -5,6 +5,7 @@ from .import views
 
 urlpatterns = [
 
+    path('',views.home,name='home'),
     path('check/',views.create_data,name='impact_default'),
     path('json/',views.create_data,name='impact_json'),
     path('xml/',views.create_data_xml,name='impact_xml'),

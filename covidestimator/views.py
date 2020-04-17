@@ -145,3 +145,7 @@ def log_request(request):
     log = Request.objects.all()
     serializer = LogSerializer(log,many=True)
     return Response(serializer.data)
+
+
+def home(request):
+    return render(request,'home.html',{})
