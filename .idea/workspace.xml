@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4361eca6-c126-41a5-bb16-63ab331b1b9e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pytest-runner/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/tests.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,6 +68,17 @@
               <item name="covid4andela" type="b2602c69:ProjectViewProjectNode" />
               <item name="covid4andela" type="462c0819:PsiDirectoryNode" />
               <item name="covidestimator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="covid4andela" type="b2602c69:ProjectViewProjectNode" />
+              <item name="covid4andela" type="462c0819:PsiDirectoryNode" />
+              <item name="pytest-runner" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="covid4andela" type="b2602c69:ProjectViewProjectNode" />
+              <item name="covid4andela" type="462c0819:PsiDirectoryNode" />
+              <item name="pytest-runner" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -228,7 +241,7 @@
     <entry file="file://$PROJECT_DIR$/pytest.ini">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/tests.py">
+    <entry file="file://$PROJECT_DIR$/pytest-runner/tests/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1955">
           <caret line="115" column="44" lean-forward="true" selection-start-line="115" selection-start-column="44" selection-end-line="115" selection-end-column="44" />
