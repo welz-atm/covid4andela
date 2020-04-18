@@ -186,3 +186,6 @@ def test_severe_impact_dollars_in_flight():
                                     totalHospitalBeds=3897063)
     dollarsin_flight = dollarsinflight(currently_infected(data.reportedCases),data.avgDailyIncome)
     assert dollarsin_flight == 6610500.0
+
+
+#check weeks
