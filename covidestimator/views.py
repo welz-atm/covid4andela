@@ -5,7 +5,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view
 from rest_framework_xml.renderers import XMLRenderer
 from .serializers import DataFormSerializer,LogSerializer
-from src.estimator import currentlyinfected, currently_infected, infectionbyrequestedattime, \
+from .estimator import currentlyinfected, currently_infected, infectionbyrequestedattime, \
     severecasesbyrequestedtime, hospitalbedsperrequestedtime, casesforicubyrequestedtime, \
     casesforventilatorsbyrequestedtime,dollarsinflight
 
