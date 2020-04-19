@@ -3,7 +3,7 @@ from covidestimator.models import Data
 from django.urls import reverse
 from covidestimator.estimator import currentlyinfected, currently_infected, infectionbyrequestedattime, \
     severecasesbyrequestedtime, hospitalbedsperrequestedtime, casesforicubyrequestedtime, \
-    casesforventilatorsbyrequestedtime,dollarsinflight
+    casesforventilatorsbyrequestedtime,dollarsinflight,calculate_period
 
 
 @pytest.fixture
@@ -39,11 +39,9 @@ def test_default_view(api_client):
     response = api_client.get(url)
     assert response.status_code == 200
 
-#Impact
-
 
 @pytest.mark.django_db
-def test_impact_currently_infected():
+def test_currently_infected():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
@@ -52,48 +50,52 @@ def test_impact_currently_infected():
 
 
 @pytest.mark.django_db
-def test_impact_infection_by_requested_at_time():
+def test_infection_by_requested_at_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
-    infection_byrequestedat_time = infectionbyrequestedattime(data.timeToElapse,currentlyinfected(data.reportedCases))
+    infection_byrequestedat_time = infectionbyrequestedattime(calculate_period(data.periodType,data.timeToElapse),
+                                                              currentlyinfected(data.reportedCases))
     assert infection_byrequestedat_time == 29622272000
 
 
 @pytest.mark.django_db
-def test_impact_severe_cases_by_requested_time():
+def test_severe_cases_by_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
-    severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
+    severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(calculate_period(data.periodType
+                                                                                        ,data.timeToElapse),
                                                                                         currentlyinfected
                                                                                         (data.reportedCases)))
     assert severecases_byrequestedtime == 4443340800.0
 
 
 @pytest.mark.django_db
-def test_impact_hospital_beds_per_requested_time():
+def test_hospital_beds_per_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     hospitalbedsperrequested_time = hospitalbedsperrequestedtime(data.totalHospitalBeds,severecasesbyrequestedtime
-    (infectionbyrequestedattime(data.timeToElapse,currentlyinfected(data.reportedCases))))
+    (infectionbyrequestedattime(calculate_period(data.periodType,data.timeToElapse),currentlyinfected
+    (data.reportedCases))))
     assert hospitalbedsperrequested_time == -4441976827.95
 
 
 @pytest.mark.django_db
-def test_impact_cases_for_icu_by_requested_time():
+def test_cases_for_icu_by_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
-    casesforicubyrequested_time = casesforicubyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
+    casesforicubyrequested_time = casesforicubyrequestedtime(infectionbyrequestedattime(calculate_period(data.periodType
+                                                                                        ,data.timeToElapse),
                                                                                         currentlyinfected
                                                                                         (data.reportedCases)))
     assert casesforicubyrequested_time == 1481113600.0
 
 
 @pytest.mark.django_db
-def test_impact_cases_for_ventilators_by_requested_time():
+def test_cases_for_ventilators_by_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
@@ -102,7 +104,7 @@ def test_impact_cases_for_ventilators_by_requested_time():
 
 
 @pytest.mark.django_db
-def test_impact_dollars_in_flight():
+def test_dollars_in_flight():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
@@ -113,7 +115,7 @@ def test_impact_dollars_in_flight():
 
 
 @pytest.mark.django_db
-def test_severe_impact_currently_infected():
+def test_currently_infected():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
@@ -122,50 +124,54 @@ def test_severe_impact_currently_infected():
 
 
 @pytest.mark.django_db
-def test_severe_impact_infection_by_requested_at_time():
+def test_infection_by_requested_at_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
-    infection_byrequestedat_time = infectionbyrequestedattime(data.timeToElapse,currently_infected(data.reportedCases))
+    infection_byrequestedat_time = infectionbyrequestedattime(calculate_period(data.periodType,data.timeToElapse),
+                                                              currently_infected(data.reportedCases))
     assert infection_byrequestedat_time == 148111360000
 
 
 @pytest.mark.django_db
-def test_severe_impact_severe_cases_by_requested_time():
+def test_severe_cases_by_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
-    severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
+    severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(calculate_period(data.periodType
+                                                                                        ,data.timeToElapse),
                                                                                         currently_infected
                                                                                         (data.reportedCases)))
     assert severecases_byrequestedtime == 22216704000.0
 
 
 @pytest.mark.django_db
-def test_severe_impact_hospital_beds_per_requested_time():
+def test_hospital_beds_per_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     hospitalbedsperrequested_time = hospitalbedsperrequestedtime(data.totalHospitalBeds,severecasesbyrequestedtime(
-                                    infectionbyrequestedattime(data.timeToElapse,currently_infected(data.reportedCases))
+                                    infectionbyrequestedattime(calculate_period(data.periodType,data.timeToElapse),
+                                                               currently_infected(data.reportedCases))
                                                                                              )
                                                                  )
     assert hospitalbedsperrequested_time == -22215340027.95
 
 
 @pytest.mark.django_db
-def test_severe_impact_cases_for_icu_by_requested_time():
+def test_cases_for_icu_by_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
-    casesforicubyrequested_time = casesforicubyrequestedtime(infectionbyrequestedattime(data.timeToElapse,
+    casesforicubyrequested_time = casesforicubyrequestedtime(infectionbyrequestedattime(calculate_period(data.periodType
+                                                                                        ,data.timeToElapse),
                                                                                         currently_infected
                                                                                         (data.reportedCases)))
     assert casesforicubyrequested_time == 7405568000.0
 
 
 @pytest.mark.django_db
-def test_severe_impact_cases_for_ventilators_by_requested_time():
+def test_cases_for_ventilators_by_requested_time():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
@@ -174,9 +180,51 @@ def test_severe_impact_cases_for_ventilators_by_requested_time():
 
 
 @pytest.mark.django_db
-def test_severe_impact_dollars_in_flight():
+def test_dollars_in_flight():
     data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
                                     periodType="days", timeToElapse=58, reportedCases=565, population=12000987,
                                     totalHospitalBeds=3897063)
     dollarsin_flight = dollarsinflight(currently_infected(data.reportedCases),data.avgDailyIncome)
     assert dollarsin_flight == 6610500.0
+
+
+#test for week
+
+
+@pytest.mark.django_db
+def test_week_input_infection_requested_time():
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+                               periodType="weeks", timeToElapse=3, reportedCases=565, population=12000987,
+                               totalHospitalBeds=3897063)
+    data.save()
+    infection_byrequestedat_time = infectionbyrequestedattime(calculate_period(data.periodType,data.timeToElapse),
+                                                              currentlyinfected(data.reportedCases))
+    assert infection_byrequestedat_time == 7232000
+
+
+@pytest.mark.django_db
+def test_week_input_cases_by_requested_time():
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+                               periodType="weeks", timeToElapse=3, reportedCases=565, population=12000987,
+                               totalHospitalBeds=3897063)
+    severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(calculate_period
+                                                                                        (data.periodType,
+                                                                                         data.timeToElapse),
+                                                                                        currentlyinfected
+                                                                                        (data.reportedCases)))
+    assert severecases_byrequestedtime == 1084800.0
+
+
+#compare 21 days equivalent to 3weeks above
+
+
+@pytest.mark.django_db
+def test_day_input_cases_by_requested_time():
+    data = Data.objects.create(name="Jamaica", avgAge=26.5, avgDailyIncome=12, avgDailyIncomePopulation=3,
+                               periodType="days", timeToElapse=21, reportedCases=565, population=12000987,
+                               totalHospitalBeds=3897063)
+    severecases_byrequestedtime = severecasesbyrequestedtime(infectionbyrequestedattime(calculate_period(data.periodType
+                                                                                        ,data.timeToElapse),
+                                                                                        currentlyinfected
+                                                                                        (data.reportedCases)))
+    assert severecases_byrequestedtime == 1084800.0
