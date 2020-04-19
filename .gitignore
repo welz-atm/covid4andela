@@ -22,9 +22,11 @@ src/__pycache__
 covid19_estimator_py.egg-info/
 
 # env
-env
+.env
 
 # environment
 .idea
 
+env/
 
+env

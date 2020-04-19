@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from silk.models import Request
 from rest_framework.response import Response
+from silk.models import Request
 from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view
 from rest_framework_xml.renderers import XMLRenderer
 from .serializers import DataFormSerializer,LogSerializer
 from .estimator import currentlyinfected, currently_infected, infectionbyrequestedattime, \
     severecasesbyrequestedtime, hospitalbedsperrequestedtime, casesforicubyrequestedtime, \
-    casesforventilatorsbyrequestedtime,dollarsinflight
+    casesforventilatorsbyrequestedtime,dollarsinflight,calculate_period
 
 
 @api_view(['POST','GET'])
@@ -30,36 +30,43 @@ def create_data(request):
         account_data['totalHospitalBeds'] = account.totalHospitalBeds
 
         impact['currentlyInfected']= currentlyinfected(account.reportedCases)
-        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,currentlyinfected
+        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(calculate_period(account.periodType,
+                                                                          account.timeToElapse),currentlyinfected
         (account.reportedCases))
-        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(infectionbyrequestedattime
-                                                                        (account.timeToElapse,currentlyinfected
-                                                                        (account.reportedCases)))
+        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(infectionbyrequestedattime(calculate_period
+                                                                       (account.periodType,account.timeToElapse)
+                                                                        ,currentlyinfected(account.reportedCases)))
         impact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,
                                                                               severecasesbyrequestedtime
                                                                               (infectionbyrequestedattime
-                                                                               (account.timeToElapse,currentlyinfected
+                                                                               (calculate_period(account.periodType,
+                                                                                account.timeToElapse),currentlyinfected
                                                                                (account.reportedCases))))
-        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(infectionbyrequestedattime
-                                                                          (account.timeToElapse,currentlyinfected
-                                                                          (account.reportedCases)))
+        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(infectionbyrequestedattime(calculate_period
+                                                                         (account.periodType,account.timeToElapse),
+                                                                          currentlyinfected(account.reportedCases)))
         impact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(currentlyinfected
                                                                                           (account.reportedCases))
         impact['dollarsInFlight'] = dollarsinflight(currentlyinfected(account.reportedCases),account.avgDailyIncome)
 
         severeimpact['currentlyInfected'] = currently_infected(account.reportedCases)
-        severeimpact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,
-                                                                          currently_infected(account.reportedCases))
+        severeimpact['infectionByRequestedAtTime'] = infectionbyrequestedattime(calculate_period(account.periodType,
+                                                                                account.timeToElapse),currently_infected
+                                                                                (account.reportedCases))
         severeimpact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(
-            infectionbyrequestedattime(account.timeToElapse, currently_infected(account.reportedCases)))
+            infectionbyrequestedattime(calculate_period(account.periodType,account.timeToElapse),
+                                       currently_infected(account.reportedCases)))
         severeimpact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,
-                                                                              severecasesbyrequestedtime(
-                                                                                  infectionbyrequestedattime(
-                                                                                      account.timeToElapse,
+                                                                                    severecasesbyrequestedtime(
+                                                                                     infectionbyrequestedattime(
+                                                                                      calculate_period
+                                                                                      (account.periodType,
+                                                                                       account.timeToElapse),
                                                                                       currently_infected(
                                                                                           account.reportedCases))))
         severeimpact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(
-            infectionbyrequestedattime(account.timeToElapse, currently_infected(account.reportedCases)))
+            infectionbyrequestedattime(calculate_period(account.periodType,account.timeToElapse),
+                                       currently_infected(account.reportedCases)))
         severeimpact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(
             currently_infected(account.reportedCases))
         severeimpact['dollarsInFlight'] = dollarsinflight(currently_infected(account.reportedCases),
@@ -94,38 +101,45 @@ def create_data_xml(request):
         account_data['population'] = account.population
         account_data['totalHospitalBeds'] = account.totalHospitalBeds
 
-        impact['currentlyInfected']= currentlyinfected(account.reportedCases)
-        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,currentlyinfected
-        (account.reportedCases))
-        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(infectionbyrequestedattime
-                                                                        (account.timeToElapse,currentlyinfected
-                                                                        (account.reportedCases)))
+        impact['currentlyInfected'] = currentlyinfected(account.reportedCases)
+        impact['infectionByRequestedAtTime'] = infectionbyrequestedattime(
+            calculate_period(account.periodType, account.timeToElapse), currentlyinfected(account.reportedCases))
+        impact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(
+            infectionbyrequestedattime(calculate_period(account.periodType, account.timeToElapse),
+                                       currentlyinfected(account.reportedCases)))
         impact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,
-                                                                              severecasesbyrequestedtime
-                                                                              (infectionbyrequestedattime
-                                                                               (account.timeToElapse,
-                                                                                currentlyinfected
-                                                                                (account.reportedCases))))
-        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(infectionbyrequestedattime
-                                                                          (account.timeToElapse,
-                                                                           currentlyinfected(account.reportedCases)))
-        impact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(currentlyinfected
-                                                                                          (account.reportedCases))
-        impact['dollarsInFlight'] = dollarsinflight(currentlyinfected(account.reportedCases),account.avgDailyIncome)
-
-        severeimpact['currentlyInfected'] = currently_infected(account.reportedCases)
-        severeimpact['infectionByRequestedAtTime'] = infectionbyrequestedattime(account.timeToElapse,
-                                                                          currently_infected(account.reportedCases))
-        severeimpact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(
-            infectionbyrequestedattime(account.timeToElapse, currently_infected(account.reportedCases)))
-        severeimpact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,
                                                                               severecasesbyrequestedtime(
                                                                                   infectionbyrequestedattime(
-                                                                                      account.timeToElapse,
-                                                                                      currently_infected(
+                                                                                      calculate_period(
+                                                                                          account.periodType,
+                                                                                          account.timeToElapse),
+                                                                                      currentlyinfected(
                                                                                           account.reportedCases))))
+        impact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(
+            infectionbyrequestedattime(calculate_period(account.periodType, account.timeToElapse),
+                                       currentlyinfected(account.reportedCases)))
+        impact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(
+            currentlyinfected(account.reportedCases))
+        impact['dollarsInFlight'] = dollarsinflight(currentlyinfected(account.reportedCases), account.avgDailyIncome)
+
+        severeimpact['currentlyInfected'] = currently_infected(account.reportedCases)
+        severeimpact['infectionByRequestedAtTime'] = infectionbyrequestedattime(
+            calculate_period(account.periodType, account.timeToElapse),
+            currently_infected(account.reportedCases))
+        severeimpact['severeCaseByRequestedTim'] = severecasesbyrequestedtime(
+            infectionbyrequestedattime(calculate_period(account.periodType, account.timeToElapse),
+                                       currently_infected(account.reportedCases)))
+        severeimpact['hospitalBedsPerRequestedTime'] = hospitalbedsperrequestedtime(account.totalHospitalBeds,
+                                                                                    severecasesbyrequestedtime(
+                                                                                        infectionbyrequestedattime(
+                                                                                            calculate_period(
+                                                                                                account.periodType,
+                                                                                                account.timeToElapse),
+                                                                                            currently_infected(
+                                                                                                account.reportedCases))))
         severeimpact['casesForIcuByRequestedTime'] = casesforicubyrequestedtime(
-            infectionbyrequestedattime(account.timeToElapse, currently_infected(account.reportedCases)))
+            infectionbyrequestedattime(calculate_period(account.periodType, account.timeToElapse),
+                                       currently_infected(account.reportedCases)))
         severeimpact['casesForVentilatorsByRequestedTime'] = casesforventilatorsbyrequestedtime(
             currently_infected(account.reportedCases))
         severeimpact['dollarsInFlight'] = dollarsinflight(currently_infected(account.reportedCases),
@@ -147,6 +161,11 @@ def log_request(request):
     serializer = LogSerializer(log,many=True)
     return Response(serializer.data)
 
-
+	
 def home(request):
     return render(request,'home.html',{})
+
+
+
+
+
