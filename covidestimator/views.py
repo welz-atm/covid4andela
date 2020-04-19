@@ -160,6 +160,9 @@ def log_request(request):
     serializer = LogSerializer(log,many=True)
     return Response(serializer.data)
 
+	
+def home(request):
+    return render(request,'home.html',{})
 
 
 
